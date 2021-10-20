@@ -16,8 +16,7 @@ class MoviesController < ApplicationController
     end
     
     @movies = Movie.with_ratings(@ratings_to_show)
-    
-    @hash_ratings_to_show = Hash[ratings_to_show.collect {|key| [key, "1"]}]
+    @movies = movies.order(params[:sort_by])
     
   end
 
