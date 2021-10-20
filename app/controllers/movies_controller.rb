@@ -17,6 +17,8 @@ class MoviesController < ApplicationController
     
     @movies = Movie.with_ratings(@ratings_to_show)
     
+    @hashed_all_ratings = Hash[all_ratings.collect {|key| [key, "1"]}]
+    
   end
 
   def new
