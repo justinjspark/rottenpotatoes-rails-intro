@@ -16,8 +16,7 @@ class MoviesController < ApplicationController
     end
     
     @movies = Movie.with_ratings(@ratings_to_show)
-    
-    
+    @movies = movies.order(params[:sort_by])
     
   end
 
