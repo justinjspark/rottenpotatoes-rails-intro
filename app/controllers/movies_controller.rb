@@ -8,20 +8,12 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.all_ratings
- 
-    if params[:sort_by]
-      session[:sort_by] = params[:sort_by]
-    end
     
     if !params[:ratings].nil?
       @ratings_to_show = params[:ratings].keys
       session[:ratings] = @ratings_to_show
     else
       @ratings_to_show = []
-    end
-    
-    if (params[:ratings].nil? && !session[:ratings].nil?) || (params[:sort_by].nil? && !session[:sort_by].nil?)
-      redirect_to movies_path("ratings" => session[:ratings].to_h { |key| [key, ''] }, "sort_by" => session[:sort_by])
     end
       
     @movies = Movie.with_ratings(@ratings_to_show)
@@ -34,6 +26,14 @@ class MoviesController < ApplicationController
     
     if params[:sort_by] == "release_date"
       @release_date_header = "hilite bg-warning"
+    end
+    
+    if params[:sort_by]
+      session[:sort_by] = params[:sort_by]
+    end
+    
+    if (params[:ratings].nil? && !session[:ratings].nil?) || (params[:sort_by].nil? && !session[:sort_by].nil?)
+      redirect_to movies_path("ratings" => session[:ratings].to_h { |key| [key, ''] }, "sort_by" => session[:sort_by])
     end
     
   end
